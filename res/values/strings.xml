@@ -1,0 +1,7 @@
+<resources>
+
+    <string name="app_name">The File Tree</string>
+    <string name="title_file_detail">file Detail</string>
+    <string name="title_file_list">files</string>
+
+</resources>

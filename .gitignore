@@ -11,6 +11,12 @@
 # generated files
 bin/
 gen/
+libs/
 
 # Local configuration file (sdk path, etc)
 local.properties
+.*
+!.gitignore
+project*
+proguard*
+lint.xml
