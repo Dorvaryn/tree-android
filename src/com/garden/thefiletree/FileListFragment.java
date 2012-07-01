@@ -4,6 +4,7 @@ import android.R;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -24,7 +25,7 @@ public class FileListFragment extends ListFragment implements TreeTaskCallbacks,
     public interface Callbacks {
 
         public void onItemSelected(String id);
-    	public void setFragment(FileListFragment fragment);
+    	public void setFragment(Fragment fragment);
     }
 
     private static Callbacks sDummyCallbacks = new Callbacks() {
@@ -33,7 +34,7 @@ public class FileListFragment extends ListFragment implements TreeTaskCallbacks,
         }
 
 		@Override
-		public void setFragment(FileListFragment fragment) {		
+		public void setFragment(Fragment fragment) {		
 		}
     };
 
@@ -45,7 +46,7 @@ public class FileListFragment extends ListFragment implements TreeTaskCallbacks,
     	super.onResume();
     	if(treeGetDirTask == null){
     		treeGetDirTask = new RetrieveFile(this);
-    		treeGetDirTask.execute(TheFileTreeApp.getCurrentFilePath(),"start");
+    		treeGetDirTask.execute(TheFileTreeApp.getCurrentDirPath(),"start");
     	}
     }
     
@@ -98,7 +99,7 @@ public class FileListFragment extends ListFragment implements TreeTaskCallbacks,
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
         String clicked = (String) getListAdapter().getItem(position);
-        String newPath = TheFileTreeApp.getCurrentFilePath()+"/"+clicked;
+        String newPath = TheFileTreeApp.getCurrentDirPath()+"/"+clicked;
         if(treeGetDirTask == null){
         	treeGetDirTask = new RetrieveFile(this);
         	treeGetDirTask.execute(newPath,"nav");
@@ -133,7 +134,13 @@ public class FileListFragment extends ListFragment implements TreeTaskCallbacks,
 	public void reloadFile() {
 		if(treeGetDirTask == null){
     		treeGetDirTask = new RetrieveFile(this);
-    		treeGetDirTask.execute(TheFileTreeApp.getCurrentFilePath(),"nav");
+    		treeGetDirTask.execute(TheFileTreeApp.getCurrentDirPath(),"nav");
     	}
+	}
+
+	@Override
+	public void reset() {
+		// TODO Auto-generated method stub
+		
 	}
 }

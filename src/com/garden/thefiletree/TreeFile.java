@@ -1,5 +1,8 @@
 package com.garden.thefiletree;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+@JsonIgnoreProperties({"err"})
 public class TreeFile {
 	protected Meta meta;
 	protected String path;

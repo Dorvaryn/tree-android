@@ -31,14 +31,7 @@ public class FileDetailActivity extends FragmentActivity {
                     .add(R.id.file_detail_container, fragment)
                     .commit();
         }
-    }
-
-    @Override
-	public void onBackPressed() {
-    	int lastSlash = TheFileTreeApp.getCurrentFilePath().lastIndexOf('/');
-		TheFileTreeApp.setCurrentFilePath(TheFileTreeApp.getCurrentFilePath().substring(0, lastSlash));
-		super.onBackPressed();
-	}
+    }   
 
 	@Override
     public boolean onOptionsItemSelected(MenuItem item) {

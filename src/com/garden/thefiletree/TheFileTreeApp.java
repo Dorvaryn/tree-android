@@ -5,7 +5,8 @@ import android.app.Application;
 public class TheFileTreeApp extends Application {
 	
 	private static TreeAPI api;
-	private static String currentFilePath = "/test";
+	private static String currentDirPath = "/test";
+	private static String currentFilePath = null;
 	
 	public TheFileTreeApp() {
 		super();
@@ -22,6 +23,12 @@ public class TheFileTreeApp extends Application {
 	}
 	public static void setCurrentFilePath(String currentFilePath) {
 		TheFileTreeApp.currentFilePath = currentFilePath;
+	}
+	public static String getCurrentDirPath() {
+		return currentDirPath;
+	}
+	public static void setCurrentDirPath(String currentDirPath) {
+		TheFileTreeApp.currentDirPath = currentDirPath;
 	}
 	
 }

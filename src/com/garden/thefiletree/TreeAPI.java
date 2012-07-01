@@ -37,11 +37,17 @@ public class TreeAPI {
 	}
 
 	public boolean isDirectory() {
-		return file.getMeta().getType().equalsIgnoreCase("dir");
+		if(file.getMeta() != null){
+			return file.getMeta().getType().equalsIgnoreCase("dir");
+		}
+		return false;
 	}
 
 	public boolean isText() {
-		return file.getMeta().getType().startsWith("text/");
+		if(file.getMeta() != null){
+			return file.getMeta().getType().startsWith("text/");
+		}
+		return false;
 	}
 
 	public TreeDirectory getDir() {

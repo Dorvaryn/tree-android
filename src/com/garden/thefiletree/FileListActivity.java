@@ -2,14 +2,16 @@ package com.garden.thefiletree;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
 public class FileListActivity extends FragmentActivity
         implements FileListFragment.Callbacks {
 
     private boolean mTwoPane;
-    private FileListFragment fragment;
-
+    private FileListFragment fragmentList;
+    private FileDetailFragement fragementDetail;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,11 +26,14 @@ public class FileListActivity extends FragmentActivity
     
     @Override
 	public void onBackPressed() {
-    	if(!TheFileTreeApp.getCurrentFilePath().equalsIgnoreCase("")){
-			int lastSlash = TheFileTreeApp.getCurrentFilePath().lastIndexOf('/');
-			TheFileTreeApp.setCurrentFilePath(TheFileTreeApp.getCurrentFilePath().substring(0, lastSlash));
-			fragment.reloadFile();
-    	}else {
+    	if(!TheFileTreeApp.getCurrentDirPath().equalsIgnoreCase("")){
+			int lastSlash = TheFileTreeApp.getCurrentDirPath().lastIndexOf('/');
+			TheFileTreeApp.setCurrentDirPath(TheFileTreeApp.getCurrentDirPath().substring(0, lastSlash));
+			if(mTwoPane && fragementDetail != null){
+				fragementDetail.reset();
+			}
+			fragmentList.reloadFile();
+    	}else{
     		super.onBackPressed();
     	}
 	}
@@ -53,7 +58,12 @@ public class FileListActivity extends FragmentActivity
     }
 
 	@Override
-	public void setFragment(FileListFragment fragment) {
-		this.fragment = fragment;
+	public void setFragment(Fragment fragment) {
+		if(fragment instanceof FileListFragment){
+			this.fragmentList = (FileListFragment) fragment;
+		}else if(fragment instanceof FileDetailFragement){
+			this.fragementDetail = (FileDetailFragement) fragment;
+		}
+		
 	}
 }
