@@ -7,9 +7,9 @@
     android:layout_marginRight="16dp"
     android:divider="?android:attr/dividerHorizontal"
     android:showDividers="middle"
-    tools:context=".fileListActivity">
+    tools:context=".FileListActivity">
 
-    <fragment android:name="com.garden.thefiletree.fileListFragment"
+    <fragment android:name="com.garden.thefiletree.FileListFragment"
         android:id="@+id/file_list"
         android:layout_width="0dp"
         android:layout_height="match_parent"

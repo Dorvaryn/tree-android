@@ -7,27 +7,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.widget.Button;
 import android.widget.Toast;
 
-import com.garden.thefiletree.dummy.DummyContent;
-
-public class fileCodeMirrorFragment extends Fragment {
+public class FileCodeMirrorFragment extends Fragment {
 
     public static final String ARG_ITEM_ID = "item_id";
 
     String mText = "default";
     
-    DummyContent.DummyItem mItem;
+    String mItem;
 
-    public fileCodeMirrorFragment() {
+    public FileCodeMirrorFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments().containsKey(ARG_ITEM_ID)) {
-            mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+            mItem = getArguments().getString(ARG_ITEM_ID);
         }
     }
 
@@ -38,7 +35,7 @@ public class fileCodeMirrorFragment extends Fragment {
 
 		final WebView web = (WebView) rootView.findViewById(R.id.web);
 		web.getSettings().setJavaScriptEnabled(true);
-		web.loadUrl("file:///android_asset/codemirror2/webkit/home.html");
+		web.loadUrl("file:///android_asset/cmold/webkit/home.html");
 		web.addJavascriptInterface(new JavascriptInterface(getActivity()), "AndroidCode");
         return rootView;
     }

@@ -1,43 +1,72 @@
 package com.garden.thefiletree;
 
+import android.R;
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import android.R;
-import com.garden.thefiletree.dummy.DummyContent;
+import com.garden.thefiletree.callbacks.FragmentReload;
+import com.garden.thefiletree.callbacks.TreeTaskCallbacks;
+import com.garden.thefiletree.task.RetrieveFile;
 
-public class fileListFragment extends ListFragment {
+public class FileListFragment extends ListFragment implements TreeTaskCallbacks, FragmentReload{
 
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
 
     private Callbacks mCallbacks = sDummyCallbacks;
     private int mActivatedPosition = ListView.INVALID_POSITION;
+    private RetrieveFile treeGetDirTask;
 
     public interface Callbacks {
 
         public void onItemSelected(String id);
+    	public void setFragment(FileListFragment fragment);
     }
 
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
         public void onItemSelected(String id) {
         }
+
+		@Override
+		public void setFragment(FileListFragment fragment) {		
+		}
     };
 
-    public fileListFragment() {
+    public FileListFragment() {
     }
-
+    
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                R.layout.simple_list_item_1,
-                R.id.text1,
-                DummyContent.ITEMS));
+    public void onResume(){
+    	super.onResume();
+    	if(treeGetDirTask == null){
+    		treeGetDirTask = new RetrieveFile(this);
+    		treeGetDirTask.execute(TheFileTreeApp.getCurrentFilePath(),"start");
+    	}
+    }
+    
+    public void onTaskCompleted() {
+    	TreeAPI api = treeGetDirTask.getAPICompleted();
+    	if(api.isDirectory()){
+			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
+		        setListAdapter(new ArrayAdapter<String>(getActivity(),
+		                R.layout.simple_list_item_activated_1,
+		                R.id.text1,
+		                api.getDir().getContent()));
+		    }else {
+		    	setListAdapter(new ArrayAdapter<String>(getActivity(),
+		                R.layout.simple_list_item_1,
+		                R.id.text1,
+		                api.getDir().getContent()));
+		    }
+    	}else{
+    		mCallbacks.onItemSelected(api.getTextFile().getPath());
+    	}
+    	treeGetDirTask = null;
     }
 
     @Override
@@ -55,8 +84,8 @@ public class fileListFragment extends ListFragment {
         if (!(activity instanceof Callbacks)) {
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }
-
         mCallbacks = (Callbacks) activity;
+        mCallbacks.setFragment(this);
     }
 
     @Override
@@ -68,7 +97,12 @@ public class fileListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-        mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+        String clicked = (String) getListAdapter().getItem(position);
+        String newPath = TheFileTreeApp.getCurrentFilePath()+"/"+clicked;
+        if(treeGetDirTask == null){
+        	treeGetDirTask = new RetrieveFile(this);
+        	treeGetDirTask.execute(newPath,"nav");
+        }
     }
 
     @Override
@@ -94,4 +128,12 @@ public class fileListFragment extends ListFragment {
 
         mActivatedPosition = position;
     }
+
+	@Override
+	public void reloadFile() {
+		if(treeGetDirTask == null){
+    		treeGetDirTask = new RetrieveFile(this);
+    		treeGetDirTask.execute(TheFileTreeApp.getCurrentFilePath(),"nav");
+    	}
+	}
 }

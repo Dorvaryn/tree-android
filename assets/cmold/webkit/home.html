@@ -35,10 +35,14 @@
   border: 1px solid black;
 }
 .CodeMirror-scroll {
+  top: 0px;
+  bottom: 0px;
   height: auto;
+  width: 100%;
   overflow-y: hidden;
-  overflow-x: auto;
+  overflow-x: auto; 
 }
+
 </style>
 </head>
 <body>
@@ -59,17 +63,6 @@ function findSequence(goal) {
 }
 </textarea>
 	</form>
-
-	<p>
-		Select a theme: <select onchange="selectTheme(this)">
-			<option selected>default</option>
-			<option>night</option>
-			<option>neat</option>
-			<option>elegant</option>
-			<option>cobalt</option>
-			<option>eclipse</option>
-		</select>
-	</p>
 
 	<script>
 		var editor = CodeMirror.fromTextArea(document.getElementById("code"), {

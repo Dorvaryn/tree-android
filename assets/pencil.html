@@ -1,0 +1,98 @@
+<!doctype html>
+
+<title>CodeMirror 2: Theme Demo</title>
+
+<link rel=stylesheet href=libs/codemirror/codemirror2012-07-01.css>
+<link rel=stylesheet href=libs/pencil.css>
+
+<body class=cm-s-default>
+
+<script src=libs/socket.io.js></script>
+<script src=libs/scout.js></script>
+<script src=libs/ot-min.js></script>
+<script src=libs/pencil.js></script>
+<script src=libs/codemirror/codemirror2012-07-01.js></script>
+
+      <textarea id="code" name="code">
+        function findSequence(goal) {
+          function find(start, history) {
+            if (start == goal)
+              return history;
+            else if (start > goal)
+              return null;
+            else
+              return find(start + 5, "(" + history + " + 5)") || find(start * 3, "(" + history + " * 3)");
+            }
+            
+            return find(1, "1");
+          }
+      </textarea>
+
+<script>
+  (function () {
+
+    /*
+    // UI elements
+    var undo = Scout('#undo'),
+        redo = Scout('#redo'),
+        validate = Scout('#validate'),
+        preview = Scout('#preview'),
+        run = Scout('#run'),
+        download = Scout('#download'),
+        settings = Scout('#settings'),
+        wrapper = Scout('#wrapper'), delay;
+
+    // Template information
+    var socket = Scout.socket({{=file.path|json}}), 
+        mime = {{=file.meta.type|json}} || 'text/plain',
+        theme = {{=lookup('theme')|json}} || 'default',
+        keymap = {{=lookup('keymap')|json}} || 'default',
+        lineNumbers = {{=lookup('lineNumbers')|json}} || true,
+        lineWrapping = {{=lookup('lineWrapping')|json}} || false;
+  
+    // Update UI elements on content changes
+    function onChange() {
+      postMessage(cm.getValue(), '*');
+      if (cmClient) {
+        maybeEnable(cmClient.undoStack, undo);
+        maybeEnable(cmClient.redoStack, redo);
+      }
+    }*/
+
+    // CodeMirror web editor
+    var cm = window.cm = CodeMirror(wrapper, {
+      mode: 'text/javascript',
+      value: document.getElementById("code"),
+      linenumbers: true,
+      linewrapping: false,
+      theme: 'default',
+      keymap: 'default'
+      /*
+      mode: mime,
+      value: {{=file.content|json|script}},
+      linenumbers: linenumbers,
+      linewrapping: linewrapping,
+      autofocus: true,
+      theme: theme,
+      keymap: keymap,
+      onchange: onchange
+      */
+    });
+
+    
+    // Operational transformation sync
+    var cmClient = new ot.CodeMirrorClient(socket, cm);
+    wrapper.appendChild(cmClient.clientListEl);
+    
+
+    // CodeMirror themes
+    cm.setTheme = function(theme) {
+      cm.setOption('theme', theme);
+      document.body.className =
+      document.body.className.replace(/cm-s-\w+/, 'cm-s-' + theme);
+    }; cm.setTheme(theme);
+
+  })();
+
+</script>
+
