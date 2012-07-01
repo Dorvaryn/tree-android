@@ -63,8 +63,8 @@ public class FileListFragment extends ListFragment implements TreeTaskCallbacks,
 		                R.id.text1,
 		                api.getDir().getContent()));
 		    }
-    	}else{
-    		mCallbacks.onItemSelected(api.getTextFile().getPath());
+    	}else {
+    		mCallbacks.onItemSelected(api.getFile().getPath());
     	}
     	treeGetDirTask = null;
     }

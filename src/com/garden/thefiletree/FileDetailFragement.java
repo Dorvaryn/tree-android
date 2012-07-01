@@ -47,6 +47,8 @@ public class FileDetailFragement extends Fragment implements TreeTaskCallbacks{
 		TreeAPI api = treeGetDirTask.getAPICompleted();
 		if(api.isText()){
 			((TextView) rootView.findViewById(R.id.file_detail)).setText(api.getTextFile().getContent());
+		}else {
+			((TextView) rootView.findViewById(R.id.file_detail)).setText("Sorry Binary Files not yet Supported");
 		}
 		treeGetDirTask = null;
 	}
