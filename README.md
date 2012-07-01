@@ -1,4 +1,13 @@
-tree-android
-============
+# Tree for Android #
 
-Android application for TheFileTree
+## Auteurs ##
+- Benjamin AUGUSTIN <benjamin@odai.homelinux.net>
+
+## Etat ##
+In developpement:
+###TODO ###
+- Codemirror and ot-min.js integration
+- Error control in TreeAPI
+- Binary files implementation(Image viewer and download manager)
+- Loading screen for large files
+
