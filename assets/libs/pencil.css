@@ -1,0 +1,34 @@
+/*
+ * Pencil.css
+ * CSS applied on the main text editor.
+ */
+
+.CodeMirror-scroll {
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  height: auto;
+  width: 100%;
+  /* overflow-y: hidden;
+  overflow-x: auto; */
+}
+
+.box {
+  display: none
+}
+
+.other-client {
+  position: absolute
+}
+
+.other-client pre {
+  border-left-width: 2px;
+  border-left-style: solid;
+  position: absolute;
+  bottom: 100%
+}
+
+#theme {
+  margin-left: -1px;
+  border-left: 0px;
+}
