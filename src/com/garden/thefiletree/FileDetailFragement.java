@@ -1,10 +1,5 @@
 package com.garden.thefiletree;
 
-import com.garden.thefiletree.FileListFragment.Callbacks;
-import com.garden.thefiletree.callbacks.FragmentReload;
-import com.garden.thefiletree.callbacks.TreeTaskCallbacks;
-import com.garden.thefiletree.task.RetrieveFile;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.garden.thefiletree.FileListFragment.Callbacks;
+import com.garden.thefiletree.callbacks.FragmentReload;
+import com.garden.thefiletree.callbacks.TreeTaskCallbacks;
+import com.garden.thefiletree.task.RetrieveFile;
 
 public class FileDetailFragement extends Fragment implements TreeTaskCallbacks, FragmentReload{
 
@@ -62,9 +62,9 @@ public class FileDetailFragement extends Fragment implements TreeTaskCallbacks, 
 	@Override
 	public void onTaskCompleted() {
 		TreeAPI api = treeGetDirTask.getAPICompleted();
-		if(api.isText()){
+		if(api.getFile().isText()){
 			tvDetail.setText(api.getTextFile().getContent());
-		}else {
+		}else{
 			tvDetail.setText("Sorry Binary Files not yet Supported");
 		}
 		treeGetDirTask = null;

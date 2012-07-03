@@ -52,7 +52,7 @@ public class FileListFragment extends ListFragment implements TreeTaskCallbacks,
     
     public void onTaskCompleted() {
     	TreeAPI api = treeGetDirTask.getAPICompleted();
-    	if(api.isDirectory()){
+    	if(api.getFile().isDirectory()){
 			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
 		        setListAdapter(new ArrayAdapter<String>(getActivity(),
 		                R.layout.simple_list_item_activated_1,

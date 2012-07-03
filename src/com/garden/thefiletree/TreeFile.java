@@ -10,6 +10,15 @@ public class TreeFile {
 
 	public static class Meta {
 		private String type;
+		private String theme;
+
+		public String getTheme() {
+			return theme;
+		}
+
+		public void setTheme(String theme) {
+			this.theme = theme;
+		}
 
 		public String getType() {
 			return type;
@@ -53,5 +62,26 @@ public class TreeFile {
 
 	public void setContent(Object content) {
 		this.content = content;
+	}
+	
+	public boolean isDirectory() {
+		if(meta != null){
+			return meta.type.equalsIgnoreCase("dir");
+		}
+		return false;
+	}
+
+	public boolean isText() {
+		if(meta != null){
+			return meta.type.startsWith("text/");
+		}
+		return false;
+	}
+	
+	public boolean isImage() {
+		if(meta != null){
+			return meta.type.startsWith("image/");
+		}
+		return false;
 	}
 }

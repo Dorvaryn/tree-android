@@ -15,43 +15,33 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
 
 public class TreeAPI {
-
 	private TreeFile file = null;
 
 	public void treeGetFile(String path) {
-		HttpEntity respEntity = makeHttpCall(path);
-		InputStream data = null;
-		try {
-			data = respEntity.getContent();
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		file = TheFileTreeApp.getFileFromMemCache(path);
+		if(file == null){
+			HttpEntity respEntity = makeHttpCall(path);
+			InputStream data = null;
+			try {
+				data = respEntity.getContent();
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			TreeJsonParser parser = new TreeJsonParser();
+			file = parser.parseStream(data);
+			TheFileTreeApp.addFileToMemCache(file);
 		}
-		TreeJsonParser parser = new TreeJsonParser();
-		file = parser.parseStream(data);
-	}
-
-	public boolean isDirectory() {
-		if(file.getMeta() != null){
-			return file.getMeta().getType().equalsIgnoreCase("dir");
-		}
-		return false;
-	}
-
-	public boolean isText() {
-		if(file.getMeta() != null){
-			return file.getMeta().getType().startsWith("text/");
-		}
-		return false;
 	}
 
 	public TreeDirectory getDir() {
-		if (isDirectory()) {
+		if (file.isDirectory()) {
 			@SuppressWarnings("unchecked")
 			TreeDirectory ret = new TreeDirectory(file.getMeta(), file.getPath(), (List<String>) file.getContent());
 			return ret;
@@ -60,7 +50,7 @@ public class TreeAPI {
 	}
 
 	public TreeTextFile getTextFile() {
-		if (isText()) {
+		if (file.isText()) {
 			TreeTextFile ret = new TreeTextFile(file.getMeta(), file.getPath(), (String) file.getContent());
 			return ret;
 		}
@@ -72,19 +62,21 @@ public class TreeAPI {
 	}
 
 	public HttpEntity makeHttpCall(String path) {
+		
 		HttpClient client = new DefaultHttpClient();
 		HttpPost post = new HttpPost("https://thefiletree.com/$fs");
 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 		pairs.add(new BasicNameValuePair("op", "\"cat\""));
 		pairs.add(new BasicNameValuePair("path", "\""+ path + "\""));
+	
 		
 		try {
-			post.setEntity(new UrlEncodedFormEntity(pairs));
+			post.setEntity(new UrlEncodedFormEntity(pairs, HTTP.UTF_8));
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 		HttpResponse response = null;
 		try {
 			response = client.execute(post);

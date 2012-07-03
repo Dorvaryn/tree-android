@@ -27,7 +27,7 @@ public class RetrieveFile extends AsyncTask<String, Void, Void>{
 		Log.d("tree", params[0]);
 		TheFileTreeApp.getApi().treeGetFile(params[0]);
 		if(params[1].equalsIgnoreCase("nav")){
-			if(api.isDirectory()){
+			if(api.getFile().isDirectory()){
 				TheFileTreeApp.setCurrentDirPath(api.getFile().getPath());
 			}else {
 				TheFileTreeApp.setCurrentFilePath(api.getFile().getPath());

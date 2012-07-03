@@ -12,15 +12,17 @@ public class TreeJsonParser{
     	super();
     }
 
-    public TreeFile parseStream(InputStream in) {
-    	try{
-	        return new ObjectMapper().readValue(in, TreeFile.class);
-	    } catch(JsonParseException e) {
-	        e.printStackTrace();
-	    } catch(IOException e) {
-	        e.printStackTrace();
-	    }
-	    return null;
+    public TreeFile parseStream(InputStream data){
+	    try {
+			return new ObjectMapper().readValue(data, TreeFile.class);
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
+		return null;
     }
     
 }
