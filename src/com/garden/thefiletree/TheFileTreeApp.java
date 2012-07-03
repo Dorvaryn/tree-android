@@ -27,13 +27,16 @@ public class TheFileTreeApp extends Application {
 	}
 	
 	public static void addFileToMemCache(TreeFile file) {
-	    if (getFileFromMemCache(file.getPath()) == null) {
+	    if (file.getPath() != null && getFileFromMemCache(file.getPath()) == null) {
 	        mMemoryCache.put(file.getPath(), file);
 	    }
 	}
 
 	public static TreeFile getFileFromMemCache(String path) {
-	    return mMemoryCache.get(path);
+		if(path != null){
+			return mMemoryCache.get(path);
+		}
+		return null;
 	}
 	
 	public TheFileTreeApp() {
