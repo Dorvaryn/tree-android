@@ -1,10 +1,12 @@
-package com.garden.thefiletree;
+package com.garden.thefiletree.parser;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.ObjectMapper;
+
+import com.garden.thefiletree.api.TreeFile;
 
 public class TreeJsonParser{
 

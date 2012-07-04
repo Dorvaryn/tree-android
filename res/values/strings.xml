@@ -3,5 +3,7 @@
     <string name="app_name">The File Tree</string>
     <string name="title_file_detail">file Detail</string>
     <string name="title_file_list">files</string>
+    <string name="root_dir">Root directory</string>
+    <string name="home">Your Home</string>
 
 </resources>

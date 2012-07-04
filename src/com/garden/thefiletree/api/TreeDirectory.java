@@ -1,11 +1,12 @@
-package com.garden.thefiletree;
+package com.garden.thefiletree.api;
 
 import java.util.List;
 
 public class TreeDirectory extends TreeFile{
 	
-	public TreeDirectory(Meta meta, String path, List<String> content) {
-		super(meta, path, content);
+	@SuppressWarnings("unchecked")
+	public TreeDirectory(TreeFile file) {
+		super(file.getMeta(), file.getPath(), (List<String>) file.getContent(), file.getErr());
 	}
 	@SuppressWarnings("unchecked")
 	public List<String> getContent() {

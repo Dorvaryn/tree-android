@@ -1,4 +1,4 @@
-package com.garden.thefiletree;
+package com.garden.thefiletree.fragments;
 
 import android.R;
 import android.app.Activity;
@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.garden.thefiletree.TheFileTreeApp;
+import com.garden.thefiletree.api.TreeAPI;
 import com.garden.thefiletree.callbacks.FragmentReload;
 import com.garden.thefiletree.callbacks.TreeTaskCallbacks;
 import com.garden.thefiletree.task.RetrieveFile;
@@ -80,6 +82,12 @@ public class FileListFragment extends ListFragment implements TreeTaskCallbacks,
     }
 
     @Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		this.setRetainInstance(true);
+	}
+
+	@Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         if (!(activity instanceof Callbacks)) {

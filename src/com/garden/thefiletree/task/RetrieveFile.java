@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.garden.thefiletree.TheFileTreeApp;
-import com.garden.thefiletree.TreeAPI;
+import com.garden.thefiletree.api.TreeAPI;
 import com.garden.thefiletree.callbacks.TreeTaskCallbacks;
 
 public class RetrieveFile extends AsyncTask<String, Void, Void>{

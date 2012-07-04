@@ -1,5 +1,8 @@
 package com.garden.thefiletree;
 
+import com.garden.thefiletree.fragments.FileCodeMirrorFragment;
+import com.garden.thefiletree.fragments.FileDetailFragement;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;

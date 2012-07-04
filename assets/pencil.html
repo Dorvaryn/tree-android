@@ -18,7 +18,7 @@
           function find(start, history) {
             if (start == goal)
               return history;
-            else if (start > goal)
+            else if (start  goal)
               return null;
             else
               return find(start + 5, "(" + history + " + 5)") || find(start * 3, "(" + history + " * 3)");
@@ -60,13 +60,9 @@
     }*/
 
     // CodeMirror web editor
+    var wrapper = document.getElementById("code");
     var cm = window.cm = CodeMirror(wrapper, {
-      mode: 'text/javascript',
-      value: document.getElementById("code"),
-      linenumbers: true,
-      linewrapping: false,
-      theme: 'default',
-      keymap: 'default'
+      mode: 'text/javascript'
       /*
       mode: mime,
       value: {{=file.content|json|script}},
@@ -79,19 +75,20 @@
       */
     });
 
-    
+    /* 
     // Operational transformation sync
     var cmClient = new ot.CodeMirrorClient(socket, cm);
     wrapper.appendChild(cmClient.clientListEl);
-    
+    */
 
+    /*
     // CodeMirror themes
     cm.setTheme = function(theme) {
       cm.setOption('theme', theme);
       document.body.className =
       document.body.className.replace(/cm-s-\w+/, 'cm-s-' + theme);
     }; cm.setTheme(theme);
-
+*/
   })();
 
 </script>

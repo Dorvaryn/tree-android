@@ -1,4 +1,4 @@
-package com.garden.thefiletree;
+package com.garden.thefiletree.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,9 +9,14 @@ import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.garden.thefiletree.FileListFragment.Callbacks;
+import com.garden.thefiletree.R;
+import com.garden.thefiletree.TheFileTreeApp;
+import com.garden.thefiletree.R.id;
+import com.garden.thefiletree.R.layout;
+import com.garden.thefiletree.api.TreeAPI;
 import com.garden.thefiletree.callbacks.FragmentReload;
 import com.garden.thefiletree.callbacks.TreeTaskCallbacks;
+import com.garden.thefiletree.fragments.FileListFragment.Callbacks;
 import com.garden.thefiletree.task.RetrieveFile;
 
 public class FileDetailFragement extends Fragment implements TreeTaskCallbacks, FragmentReload{
@@ -40,6 +45,7 @@ public class FileDetailFragement extends Fragment implements TreeTaskCallbacks, 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setRetainInstance(true);
         if (getArguments().containsKey(ARG_ITEM_ID)) {
         	mItem = getArguments().getString(ARG_ITEM_ID);
         }

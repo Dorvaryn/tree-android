@@ -1,4 +1,4 @@
-package com.garden.thefiletree;
+package com.garden.thefiletree.api;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,6 +16,9 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
+
+import com.garden.thefiletree.TheFileTreeApp;
+import com.garden.thefiletree.parser.TreeJsonParser;
 
 public class TreeAPI {
 	private TreeFile file = null;
@@ -42,8 +45,7 @@ public class TreeAPI {
 
 	public TreeDirectory getDir() {
 		if (file.isDirectory()) {
-			@SuppressWarnings("unchecked")
-			TreeDirectory ret = new TreeDirectory(file.getMeta(), file.getPath(), (List<String>) file.getContent());
+			TreeDirectory ret = new TreeDirectory(file);
 			return ret;
 		}
 		return null;
@@ -51,7 +53,7 @@ public class TreeAPI {
 
 	public TreeTextFile getTextFile() {
 		if (file.isText()) {
-			TreeTextFile ret = new TreeTextFile(file.getMeta(), file.getPath(), (String) file.getContent());
+			TreeTextFile ret = new TreeTextFile(file);
 			return ret;
 		}
 		return null;

@@ -1,5 +1,9 @@
 package com.garden.thefiletree;
 
+import com.garden.thefiletree.fragments.FileCodeMirrorFragment;
+import com.garden.thefiletree.fragments.FileDetailFragement;
+import com.garden.thefiletree.fragments.FileListFragment;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

@@ -1,8 +1,13 @@
 package com.garden.thefiletree;
 
+import com.garden.thefiletree.api.TreeAPI;
+import com.garden.thefiletree.api.TreeFile;
+import com.garden.thefiletree.task.PrefetchFiles;
+
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v4.util.LruCache;
 
 public class TheFileTreeApp extends Application {
@@ -10,8 +15,11 @@ public class TheFileTreeApp extends Application {
 	private static TreeAPI api;
 	private static String currentDirPath = "";
 	private static String currentFilePath = null;
-	public static String TAG = "tree";
+	private static String yourHome = null;
 	private static LruCache<String, TreeFile> mMemoryCache;
+
+	public static String TAG = "tree";
+	public static String PREF_NAME = "visilys";
 	
 	@Override
 	public void onCreate() {
@@ -22,10 +30,28 @@ public class TheFileTreeApp extends Application {
 
 	    // Use 1/8th of the available memory for this memory cache.
 	    final int cacheSize = 1024 * 1024 * memClass / 8;
-
-	    mMemoryCache = new LruCache<String, TreeFile>(cacheSize);
+	    api = new TreeAPI();
+	    mMemoryCache = new LruCache<String, TreeFile>(cacheSize);	    
+	    yourHome = getSharedPreferences(PREF_NAME, 0).getString("home", null);
+	    new PrefetchFiles(api).execute(yourHome);
 	}
 	
+	public String getYourHome() {
+		if(yourHome == null){
+			yourHome = getSharedPreferences(PREF_NAME, 0).getString("home", null);
+		}
+		return yourHome;
+	}
+
+	public void setYourHome(String yourHome) {
+		TheFileTreeApp.yourHome = yourHome;
+		SharedPreferences settings = getSharedPreferences(PREF_NAME, 0);
+		SharedPreferences.Editor editor = settings.edit();
+		editor.putString("home", yourHome);
+		// Commit the edits!
+		editor.commit();
+	}
+
 	public static void addFileToMemCache(TreeFile file) {
 	    if (file.getPath() != null && getFileFromMemCache(file.getPath()) == null) {
 	        mMemoryCache.put(file.getPath(), file);
@@ -39,10 +65,6 @@ public class TheFileTreeApp extends Application {
 		return null;
 	}
 	
-	public TheFileTreeApp() {
-		super();
-		api = new TreeAPI();
-	}
 	public static TreeAPI getApi() {
 		return api;
 	}

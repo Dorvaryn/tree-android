@@ -1,4 +1,8 @@
-package com.garden.thefiletree;
+package com.garden.thefiletree.fragments;
+
+import com.garden.thefiletree.R;
+import com.garden.thefiletree.R.id;
+import com.garden.thefiletree.R.layout;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -23,6 +27,7 @@ public class FileCodeMirrorFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setRetainInstance(true);
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             mItem = getArguments().getString(ARG_ITEM_ID);
         }

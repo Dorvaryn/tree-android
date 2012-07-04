@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:fillViewport="true"
     android:scrollbars="vertical"
-    tools:context=".FileDetailFragment" >
+    tools:context=".fragments.FileDetailFragment" >
 
     <TextView
         android:id="@+id/file_detail"

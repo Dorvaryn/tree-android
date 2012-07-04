@@ -1,6 +1,6 @@
 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:name="com.garden.thefiletree.FileListFragment"
+    android:name="com.garden.thefiletree.fragments.FileListFragment"
     android:id="@+id/file_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"

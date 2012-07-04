@@ -9,7 +9,7 @@
     android:showDividers="middle"
     tools:context=".FileListActivity">
 
-    <fragment android:name="com.garden.thefiletree.FileListFragment"
+    <fragment android:name="com.garden.thefiletree.fragment.FileListFragment"
         android:id="@+id/file_list"
         android:layout_width="0dp"
         android:layout_height="match_parent"
