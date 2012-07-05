@@ -72,7 +72,7 @@ public class FileCodeMirrorFragment extends Fragment implements
 			fileInterface = new JavascriptFileInterface(api.getTextFile());
 			web.getSettings().setJavaScriptEnabled(true);
 			web.addJavascriptInterface(fileInterface,"File");
-			web.loadUrl("file:///android_asset/pencil_binded.html");
+			web.loadUrl("file:///android_asset/pencil.html");
 		} else {
 			// tvDetail.setText("Sorry Binary Files not yet Supported");
 		}
