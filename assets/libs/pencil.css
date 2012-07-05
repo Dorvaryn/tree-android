@@ -9,8 +9,8 @@
   bottom: 0px;
   height: auto;
   width: 100%;
-  /* overflow-y: hidden;
-  overflow-x: auto; */
+  overflow-y: hidden;
+  overflow-x: auto; 
 }
 
 .box {

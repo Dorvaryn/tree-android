@@ -1,6 +1,7 @@
 <!doctype html>
 
 <title>CodeMirror 2: Theme Demo</title>
+<meta name="viewport" content="width=device-width, user-scalable=no, target-densitydpi=device-dpi" />
 
 <link rel=stylesheet href=libs/codemirror/codemirror2012-07-01.css>
 <link rel=stylesheet href=libs/pencil.css?plug=none>
@@ -50,7 +51,8 @@
       mode: File.getMime() || text/plain,
       value: File.getContent() || '',
       theme: File.getTheme() || 'default',
-      lineNumbers: true
+      lineNumbers: true,
+      lineWrapping: true
       /*
       mode: mime,
       value: {{=file.content|json|script}},
