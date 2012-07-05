@@ -46,9 +46,8 @@
     }*/
 
     // CodeMirror web editor
-    var wrapper = document.getElementById("code");
     var cm = window.cm = CodeMirror(document.body, {
-      mode: File.getMime() || text/plain,
+      mode: File.getMime() || 'text/plain',
       value: File.getContent() || '',
       theme: File.getTheme() || 'default',
       lineNumbers: true,

@@ -3,6 +3,8 @@
  * CSS applied on the main text editor.
  */
 
+html, body { position: absolute; height: 100%; width: 100%}
+
 .CodeMirror-scroll {
   position: fixed,
   top: 0px;
