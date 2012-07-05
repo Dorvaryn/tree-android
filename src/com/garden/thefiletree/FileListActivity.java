@@ -46,17 +46,15 @@ public class FileListActivity extends FragmentActivity
     public void onItemSelected(String id) {
         if (mTwoPane) {
             Bundle arguments = new Bundle();
-            arguments.putString(FileCodeMirrorFragment.ARG_ITEM_ID, id);
             //FileCodeMirrorFragment fragment = new FileCodeMirrorFragment();
-            FileDetailFragement fragment = new FileDetailFragement();
+            FileCodeMirrorFragment fragment = new FileCodeMirrorFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.file_detail_container, fragment)
                     .commit();
 
         } else {
-            Intent detailIntent = new Intent(this, FileDetailActivity.class);
-            detailIntent.putExtra(FileCodeMirrorFragment.ARG_ITEM_ID, id);
+            Intent detailIntent = new Intent(this, FileCodeMirrorActivity.class);
             startActivity(detailIntent);
         }
     }

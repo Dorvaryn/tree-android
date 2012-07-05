@@ -63,7 +63,7 @@
     var wrapper = document.getElementById("code");
     var cm = window.cm = CodeMirror(document.body, {
       mode: 'text/javascript',
-      value: 'bonjour\nlol\ntralala',
+      value: File.getContent(),
       lineNumbers: true
       /*
       mode: mime,

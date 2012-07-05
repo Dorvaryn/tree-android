@@ -11,7 +11,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 
-public class FileDetailActivity extends FragmentActivity {
+public class FileCodeMirrorActivity extends FragmentActivity {
 
 	@SuppressLint("NewApi")
 	@Override
@@ -26,7 +26,7 @@ public class FileDetailActivity extends FragmentActivity {
         if (savedInstanceState == null) {
             Bundle arguments = new Bundle();
             //FileCodeMirrorFragment fragment = new FileCodeMirrorFragment();
-            FileDetailFragement fragment = new FileDetailFragement();
+            FileCodeMirrorFragment fragment = new FileCodeMirrorFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.file_detail_container, fragment)

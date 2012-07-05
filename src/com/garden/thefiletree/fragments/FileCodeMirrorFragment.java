@@ -1,9 +1,6 @@
 package com.garden.thefiletree.fragments;
 
-import com.garden.thefiletree.R;
-import com.garden.thefiletree.R.id;
-import com.garden.thefiletree.R.layout;
-
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,57 +8,103 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.widget.Toast;
 
-public class FileCodeMirrorFragment extends Fragment {
+import com.garden.thefiletree.R;
+import com.garden.thefiletree.TheFileTreeApp;
+import com.garden.thefiletree.api.JavascriptFileInterface;
+import com.garden.thefiletree.api.TreeAPI;
+import com.garden.thefiletree.api.TreeTextFile;
+import com.garden.thefiletree.callbacks.FragmentReload;
+import com.garden.thefiletree.callbacks.TreeTaskCallbacks;
+import com.garden.thefiletree.fragments.FileListFragment.Callbacks;
+import com.garden.thefiletree.task.RetrieveFile;
 
-    public static final String ARG_ITEM_ID = "item_id";
+public class FileCodeMirrorFragment extends Fragment implements
+		TreeTaskCallbacks, FragmentReload {
 
-    String mText = "default";
-    
-    String mItem;
+	private WebView web;
 
-    public FileCodeMirrorFragment() {
-    }
+	private RetrieveFile treeGetDirTask;
+	private Callbacks mCallbacks = sDummyCallbacks;
+	
+	JavascriptFileInterface fileInterface;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.setRetainInstance(true);
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
-            mItem = getArguments().getString(ARG_ITEM_ID);
-        }
-    }
+	public FileCodeMirrorFragment() {
+	}
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_codemirror, container, false);
-
-		final WebView web = (WebView) rootView.findViewById(R.id.web);
-		web.getSettings().setJavaScriptEnabled(true);
-		web.loadUrl("file:///android_asset/cmold/webkit/home.html");
-		web.addJavascriptInterface(new JavascriptInterface(getActivity()), "AndroidCode");
-        return rootView;
-    }
-    
-    public class JavascriptInterface {
-
-		private Context mCtx;
-
-		JavascriptInterface(Context ctx) {
-
-			mCtx = ctx;
+	private static Callbacks sDummyCallbacks = new Callbacks() {
+		@Override
+		public void onItemSelected(String id) {
 		}
 
-		public void toastIt(String text) {
-
-			Toast.makeText(mCtx, text, Toast.LENGTH_LONG).show();
+		@Override
+		public void setFragment(Fragment fragment) {
 		}
-		
-		public void setText(String text) {
-			
-			mText = text;
+	};
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		this.setRetainInstance(true);
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View rootView = inflater.inflate(R.layout.fragment_codemirror,
+				container, false);
+		web = (WebView) rootView.findViewById(R.id.web);
+		if (TheFileTreeApp.getCurrentFilePath() != null
+				&& treeGetDirTask == null) {
+			treeGetDirTask = new RetrieveFile(this);
+			treeGetDirTask
+					.execute(TheFileTreeApp.getCurrentFilePath(), "start");
+		} else {
+			// tvDetail.setText("An error Has occured");
+		}
+		return rootView;
+	}
+
+	@Override
+	public void onTaskCompleted() {
+		TreeAPI api = treeGetDirTask.getAPICompleted();
+		if (api.getFile().isText()) {
+			fileInterface = new JavascriptFileInterface(api.getTextFile());
+			web.getSettings().setJavaScriptEnabled(true);
+			web.addJavascriptInterface(fileInterface,"File");
+			web.loadUrl("file:///android_asset/pencil_binded.html");
+		} else {
+			// tvDetail.setText("Sorry Binary Files not yet Supported");
+		}
+		treeGetDirTask = null;
+	}
+
+	@Override
+	public void reloadFile() {
+		treeGetDirTask = new RetrieveFile(this);
+		treeGetDirTask.execute(TheFileTreeApp.getCurrentFilePath(), "start");
+	}
+
+	@Override
+	public void reset() {
+		// tvDetail.setText("");
+		TheFileTreeApp.setCurrentFilePath("");
+	}
+
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		mCallbacks = sDummyCallbacks;
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		if ((activity instanceof Callbacks)) {
+			mCallbacks = (Callbacks) activity;
+			mCallbacks.setFragment(this);
 		}
 	}
+
+
 }
