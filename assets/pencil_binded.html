@@ -13,21 +13,6 @@
   <script src=libs/pencil.js></script>
   <script src=libs/codemirror/codemirror2012-07-01.js></script>
 
-  <!--  <textarea id="code" name="code">
-    function findSequence(goal) {
-    function find(start, history) {
-    if (start == goal)
-    return history;
-    else if (start  goal)
-    return null;
-    else
-    return find(start + 5, "(" + history + " + 5)") || find(start * 3, "(" + history + " * 3)");
-    }
-
-    return find(1, "1");
-    }
-  </textarea> -->
-
   <script>
     (function () {
 
@@ -62,8 +47,9 @@
     // CodeMirror web editor
     var wrapper = document.getElementById("code");
     var cm = window.cm = CodeMirror(document.body, {
-      mode: 'text/javascript',
-      value: File.getContent(),
+      mode: File.getMime() || text/plain,
+      value: File.getContent() || '',
+      theme: File.getTheme() || 'default',
       lineNumbers: true
       /*
       mode: mime,

@@ -13,5 +13,17 @@ public class JavascriptFileInterface {
 	public String getContent() {
 		return file.getContent();
 	}
+	
+	public String getMime() {
+		return file.getMeta().getType();
+	}
+	
+	public String getTheme() {
+		return file.getMeta().getTheme();
+	}
+	
+	public String getPath() {
+		return file.getPath();
+	}
 
 }
