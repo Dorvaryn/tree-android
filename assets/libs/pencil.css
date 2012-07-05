@@ -4,12 +4,11 @@
  */
 
 .CodeMirror-scroll {
-  position: fixed;
+  position: fixed,
   top: 0px;
   bottom: 0px;
-  height: auto;
+  height: auto,
   width: 100%;
-  overflow-y: hidden;
   overflow-x: auto; 
 }
 
