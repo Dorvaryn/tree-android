@@ -1,6 +1,5 @@
 package com.garden.thefiletree.fragments;
 
-import android.R;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,7 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.garden.thefiletree.TheFileTreeApp;
+import com.garden.thefiletree.TreeAdapter;
 import com.garden.thefiletree.api.TreeAPI;
+import com.garden.thefiletree.api.TreeFile;
 import com.garden.thefiletree.callbacks.FragmentReload;
 import com.garden.thefiletree.callbacks.TreeTaskCallbacks;
 import com.garden.thefiletree.task.RetrieveFile;
@@ -56,14 +57,14 @@ public class FileListFragment extends ListFragment implements TreeTaskCallbacks,
     	TreeAPI api = treeGetDirTask.getAPICompleted();
     	if(api.getFile().isDirectory()){
 			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
-		        setListAdapter(new ArrayAdapter<String>(getActivity(),
-		                R.layout.simple_list_item_activated_1,
-		                R.id.text1,
+		        setListAdapter(new TreeAdapter(getActivity(),
+		        		android.R.layout.simple_list_item_activated_1,
+		                android.R.id.text1,
 		                api.getDir().getContent()));
 		    }else {
-		    	setListAdapter(new ArrayAdapter<String>(getActivity(),
-		                R.layout.simple_list_item_1,
-		                R.id.text1,
+		    	setListAdapter(new TreeAdapter(getActivity(),
+		    			android.R.layout.simple_list_item_1,
+		    			android.R.id.text1,
 		                api.getDir().getContent()));
 		    }
     	}else {
@@ -106,11 +107,10 @@ public class FileListFragment extends ListFragment implements TreeTaskCallbacks,
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-        String clicked = (String) getListAdapter().getItem(position);
-        String newPath = TheFileTreeApp.getCurrentDirPath()+"/"+clicked;
+        TreeFile clicked = (TreeFile) getListAdapter().getItem(position);
         if(treeGetDirTask == null){
         	treeGetDirTask = new RetrieveFile(this);
-        	treeGetDirTask.execute(newPath,"nav");
+        	treeGetDirTask.execute(clicked.getPath(),"nav");
         }
     }
 

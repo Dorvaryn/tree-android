@@ -11,8 +11,6 @@ import android.widget.TextView;
 
 import com.garden.thefiletree.R;
 import com.garden.thefiletree.TheFileTreeApp;
-import com.garden.thefiletree.R.id;
-import com.garden.thefiletree.R.layout;
 import com.garden.thefiletree.api.TreeAPI;
 import com.garden.thefiletree.callbacks.FragmentReload;
 import com.garden.thefiletree.callbacks.TreeTaskCallbacks;

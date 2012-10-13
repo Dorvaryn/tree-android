@@ -4,7 +4,7 @@ package com.garden.thefiletree.api;
 public class TreeTextFile extends TreeFile {
 
 	public TreeTextFile(TreeFile file) {
-		super(file.getMeta(), file.getPath(), (String) file.getContent(), file.getErr());
+		super(file.getMeta(), file.getPath(), file.getDate(), (String) file.getContent(), file.getErr());
 	}
 
 	public String getContent() {

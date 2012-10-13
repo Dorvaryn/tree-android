@@ -13,8 +13,8 @@ import android.support.v4.util.LruCache;
 public class TheFileTreeApp extends Application {
 	
 	private static TreeAPI api;
-	private static String currentDirPath = "";
-	private static String currentFilePath = null;
+	private static String currentDirPath = "/";
+	private static String currentFilePath = "/";
 	private static String yourHome = null;
 	private static LruCache<String, TreeFile> mMemoryCache;
 
@@ -71,16 +71,21 @@ public class TheFileTreeApp extends Application {
 	public static void setApi(TreeAPI api) {
 		TheFileTreeApp.api = api;
 	}
-	public static String getCurrentFilePath() {
-		return currentFilePath;
-	}
-	public static void setCurrentFilePath(String currentFilePath) {
-		TheFileTreeApp.currentFilePath = currentFilePath;
-	}
+
 	public static String getCurrentDirPath() {
 		return currentDirPath;
 	}
+
 	public static void setCurrentDirPath(String currentDirPath) {
 		TheFileTreeApp.currentDirPath = currentDirPath;
 	}
+
+	public static String getCurrentFilePath() {
+		return currentFilePath;
+	}
+
+	public static void setCurrentFilePath(String currentFilePath) {
+		TheFileTreeApp.currentFilePath = currentFilePath;
+	}
+	
 }

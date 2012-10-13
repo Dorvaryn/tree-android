@@ -86,12 +86,6 @@ public class FileCodeMirrorFragment extends Fragment implements
 	}
 
 	@Override
-	public void reset() {
-		// tvDetail.setText("");
-		TheFileTreeApp.setCurrentFilePath("");
-	}
-
-	@Override
 	public void onDetach() {
 		super.onDetach();
 		mCallbacks = sDummyCallbacks;
@@ -104,6 +98,11 @@ public class FileCodeMirrorFragment extends Fragment implements
 			mCallbacks = (Callbacks) activity;
 			mCallbacks.setFragment(this);
 		}
+	}
+
+	@Override
+	public void reset() {
+		TheFileTreeApp.setCurrentFilePath("");
 	}
 
 

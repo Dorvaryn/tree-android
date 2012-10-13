@@ -1,11 +1,14 @@
 package com.garden.thefiletree.api;
 
+import java.util.Date;
+
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class TreeFile {
 	protected Meta meta;
 	protected String path;
+	protected Date date;
 	protected Object content;
 	protected Error err;
 
@@ -56,10 +59,11 @@ public class TreeFile {
 		}
 	}
 
-	public TreeFile(Meta meta, String path, Object content, Error err) {
+	public TreeFile(Meta meta, String path, Date date, Object content, Error err) {
 		super();
 		this.meta = meta;
 		this.path = path;
+		this.date = date;
 		this.content = content;
 		this.err = err;
 	}
@@ -82,6 +86,14 @@ public class TreeFile {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public Object getContent() {

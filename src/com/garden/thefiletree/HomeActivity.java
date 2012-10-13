@@ -97,7 +97,7 @@ public class HomeActivity extends FragmentActivity implements CallbacksHome {
 
 			@Override
 			public void onClick(View v) {
-				TheFileTreeApp.setCurrentDirPath("");
+				TheFileTreeApp.setCurrentDirPath("/");
 				Intent detailIntent = new Intent(HomeActivity.this,
 						FileListActivity.class);
 				startActivity(detailIntent);

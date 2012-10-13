@@ -21,12 +21,14 @@ import com.garden.thefiletree.TheFileTreeApp;
 import com.garden.thefiletree.parser.TreeJsonParser;
 
 public class TreeAPI {
-	private TreeFile file = null;
+	private TreeFile file;
 
 	public void treeGetFile(String path) {
 		file = TheFileTreeApp.getFileFromMemCache(path);
 		if(file == null){
-			HttpEntity respEntity = makeHttpCall(path);
+			httpReadFile(path);
+		}else {
+			HttpEntity respEntity = makeHttpCall("date", path);
 			InputStream data = null;
 			try {
 				data = respEntity.getContent();
@@ -38,37 +40,64 @@ public class TreeAPI {
 				e.printStackTrace();
 			}
 			TreeJsonParser parser = new TreeJsonParser();
-			file = parser.parseStream(data);
-			TheFileTreeApp.addFileToMemCache(file);
+			TreeFile dateFile = parser.parseStreamAsFile(data);
+			
+			if(!dateFile.getDate().equals(file.getDate())){
+				httpReadFile(path);
+			}
 		}
 	}
-
-	public TreeDirectory getDir() {
-		if (file.isDirectory()) {
-			TreeDirectory ret = new TreeDirectory(file);
-			return ret;
+	
+	private void httpReadFile(String path){
+		HttpEntity respEntity = makeHttpCall("read", path);
+		InputStream data = null;
+		try {
+			data = respEntity.getContent();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return null;
+		TreeJsonParser parser = new TreeJsonParser();
+		file = parser.parseStream(data).getFile();
+		TheFileTreeApp.addFileToMemCache(file);
 	}
 
-	public TreeTextFile getTextFile() {
-		if (file.isText()) {
-			TreeTextFile ret = new TreeTextFile(file);
-			return ret;
+	public TreeFile getFile(){
+		return file;
+	}
+	
+	public TreeTextFile getTextFile(){
+		if(file.isText()){
+			return (TreeTextFile) file;
 		}
 		return null;
 	}
 	
-	public TreeFile getFile() {
-		return file;
+	public TreeDirectory getDir(){
+		if(file.isDirectory()){
+			return (TreeDirectory) file;
+		}
+		return null;
 	}
+	
+	/*public Boolean isDirectory(){
+		return files.get(0).isDirectory();
+	}
+	
+	public Boolean isText(){
+		return files.get(0).isText();
+	}*/
 
-	public HttpEntity makeHttpCall(String path) {
+	public HttpEntity makeHttpCall(String op, String path) {
 		
 		HttpClient client = new DefaultHttpClient();
-		HttpPost post = new HttpPost("https://thefiletree.com/$fs");
+		//HttpPost post = new HttpPost("https://thefiletree.com/$fs");
+		HttpPost post = new HttpPost("http://192.168.1.3/$fs");
 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-		pairs.add(new BasicNameValuePair("op", "\"cat\""));
+		pairs.add(new BasicNameValuePair("op", "\""+op+"\""));
 		pairs.add(new BasicNameValuePair("path", "\""+ path + "\""));
 	
 		

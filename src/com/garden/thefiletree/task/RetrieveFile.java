@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.garden.thefiletree.TheFileTreeApp;
 import com.garden.thefiletree.api.TreeAPI;
+import com.garden.thefiletree.api.TreeFile;
 import com.garden.thefiletree.callbacks.TreeTaskCallbacks;
 
 public class RetrieveFile extends AsyncTask<String, Void, Void>{
@@ -26,13 +27,13 @@ public class RetrieveFile extends AsyncTask<String, Void, Void>{
 	protected Void doInBackground(String... params) {
 		Log.d("tree", params[0]);
 		TheFileTreeApp.getApi().treeGetFile(params[0]);
+		TreeFile file = api.getFile();
 		if(params[1].equalsIgnoreCase("nav")){
-			if(api.getFile().isDirectory()){
-				TheFileTreeApp.setCurrentDirPath(api.getFile().getPath());
-			}else {
-				TheFileTreeApp.setCurrentFilePath(api.getFile().getPath());
+			if(file.isDirectory()){
+				TheFileTreeApp.setCurrentDirPath(file.getPath());
+			}else{
+				TheFileTreeApp.setCurrentFilePath(file.getPath());
 			}
-			
 		}
       	return null;
 	}

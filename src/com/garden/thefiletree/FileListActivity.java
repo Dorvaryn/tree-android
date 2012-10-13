@@ -30,7 +30,7 @@ public class FileListActivity extends FragmentActivity
     
     @Override
 	public void onBackPressed() {
-    	if(!TheFileTreeApp.getCurrentDirPath().equalsIgnoreCase("")){
+    	if(!TheFileTreeApp.getCurrentDirPath().equalsIgnoreCase("/")){
 			int lastSlash = TheFileTreeApp.getCurrentDirPath().lastIndexOf('/');
 			TheFileTreeApp.setCurrentDirPath(TheFileTreeApp.getCurrentDirPath().substring(0, lastSlash));
 			if(mTwoPane && fragementDetail != null){
